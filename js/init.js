@@ -318,6 +318,7 @@
         case "initial":
 					$("#disconnect").hide();
 					$("#connect").show();
+					$("#permissions").text("Select the device you want and make sure to grant all permissions, both on this device and on the target device.");
 					break;
 				case "connecting":
 					$("#connect").hide();
@@ -351,14 +352,14 @@
             log("Please check the screen of your " + webusb.device.productName + ".");
             updateState("connecting")
           });
+          updateState("connected");
         } catch (error) {
           log(error);
 
-          Materialize.toast(error.message + " Ensure that the USB port is not in use (i.e. adb server is running).", 6000);
+          $("#permissions").text(error.message + " Ensure that the USB port is not in use (i.e. adb server is running).", 6000);
           adb = null;
         }
       }
-      updateState("connected");
     };
 
     let disconnect = async () => {
